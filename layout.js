@@ -8,7 +8,7 @@ function loadNavbar() {
 
       <div class="flex gap-6 items-center">
         <a href="index.html" class="text-gray-600 hover:text-blue-600">Home</a>
-        <a href="#" class="text-gray-600 hover:text-blue-600">About</a>
+        <a href="about.html" class="text-gray-600 hover:text-blue-600">About</a>
         <a href="#" class="text-gray-600 hover:text-blue-600">Contact</a>
         <button class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
           Login
