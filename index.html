@@ -2,19 +2,31 @@
 <html>
 <head>
   <title>EasyPG</title>
-  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
 
-  <header>
-    <h1>EasyPG</h1>
-    <input type="text" id="search" placeholder="Search by city or area..." />
-  </header>
+<body class="bg-gray-100">
 
-  <section id="listings"></section>
+  <!-- Navbar -->
+  <div id="navbar"></div>
 
+  <!-- Main Content -->
+  <section 
+    id="listings" 
+    class="grid grid-cols-1 md:grid-cols-3 gap-6 p-6 mt-20 max-w-6xl mx-auto">
+  </section>
+
+  <!-- Footer -->
+  <div id="footer"></div>
+
+  <script src="layout.js"></script>
   <script src="data.js"></script>
   <script src="script.js"></script>
+
+  <script>
+    loadNavbar();
+    loadFooter();
+  </script>
 
 </body>
 </html>
