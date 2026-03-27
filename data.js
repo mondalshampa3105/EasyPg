@@ -9,8 +9,8 @@ const listings = [
     type: "PG",
     rating: 4.5,
     amenities: ["WiFi", "Food", "AC", "Laundry"],
-    image: "https://via.placeholder.com/300",
-    description: "Safe and modern PG with home-style food near railway station."
+    image: "https://asset-cdn.stanzaliving.com/stanza-living/image/upload/f_auto,q_auto,w_600/e_improve/e_sharpen:10/e_saturation:10/v1585230160/Website/CMS-Uploads/j6nmhp7foszuo6leeoqq.jpg",
+    image: "https://asset-cdn.stanzaliving.com/stanza-living/image/upload/f_auto,q_auto,w_600/e_improve/e_sharpen:10/e_saturation:10/v1669097135/Website/CMS-Uploads/JWS08128_29_30-2_wyfujs.jpg",
   },
   {
     id: 2,
