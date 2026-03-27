@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Add Listing</title>
+  <link href="output.css" rel="stylesheet">
+</head>
+
+<body class="bg-gray-100">
+
+  <div id="navbar"></div>
+
+  <div class="max-w-2xl mx-auto bg-white p-6 rounded-xl shadow mt-24">
+    <h2 class="text-2xl font-bold mb-4">Add Listing</h2>
+
+    <input id="title" placeholder="Title" class="w-full mb-3 p-2 border rounded"/>
+    <input id="location" placeholder="City" class="w-full mb-3 p-2 border rounded"/>
+    <input id="area" placeholder="Area" class="w-full mb-3 p-2 border rounded"/>
+    <input id="price" type="number" placeholder="Price" class="w-full mb-3 p-2 border rounded"/>
+    <input id="image" placeholder="Image URL" class="w-full mb-3 p-2 border rounded"/>
+
+    <select id="type" class="w-full mb-3 p-2 border rounded">
+      <option>PG</option>
+      <option>Flat</option>
+    </select>
+
+    <select id="gender" class="w-full mb-3 p-2 border rounded">
+      <option>Boys</option>
+      <option>Girls</option>
+    </select>
+
+    <button onclick="addListing()" class="w-full bg-green-600 text-white py-2 rounded">
+      Add Listing
+    </button>
+  </div>
+
+  <div id="footer"></div>
+
+  <script src="auth.js"></script>
+  <script src="layout.js"></script>
+  <script src="data.js"></script>
+  <script src="addListing.js"></script>
+
+  <script>
+    loadNavbar();
+    loadFooter();
+  </script>
+
+</body>
+</html>

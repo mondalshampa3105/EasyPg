@@ -1,4 +1,31 @@
 function loadNavbar() {
+
+  const user = JSON.parse(localStorage.getItem("user"));
+
+  let rightSection = "";
+
+  if (user) {
+    rightSection = `
+      <a href="add-listing.html" class="text-gray-600 hover:text-blue-600">Add Listing</a>
+      <a href="wishlist.html" class="text-gray-600 hover:text-blue-600">Wishlist</a>
+      <a href="profile.html" class="text-gray-600 hover:text-blue-600">Profile</a>
+
+      <span class="text-gray-700">Hi, <b>${user.name}</b></span>
+
+      <button id="logoutBtn" 
+        class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600">
+        Logout
+      </button>
+    `;
+  } else {
+    rightSection = `
+      <a href="login.html" 
+        class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+        Login
+      </a>
+    `;
+  }
+
   const navbar = `
     <nav class="fixed top-0 left-0 w-full bg-white shadow-md z-50 px-6 py-3 flex justify-between items-center">
       
@@ -10,15 +37,21 @@ function loadNavbar() {
         <a href="index.html" class="text-gray-600 hover:text-blue-600">Home</a>
         <a href="about.html" class="text-gray-600 hover:text-blue-600">About</a>
         <a href="#" class="text-gray-600 hover:text-blue-600">Contact</a>
-        <button class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
-          Login
-        </button>
+        ${rightSection}
       </div>
 
     </nav>
   `;
 
   document.getElementById("navbar").innerHTML = navbar;
+
+  // Logout event
+  if (user) {
+    const btn = document.getElementById("logoutBtn");
+    if (btn) {
+      btn.addEventListener("click", logout);
+    }
+  }
 }
 
 function loadFooter() {
@@ -40,7 +73,7 @@ function loadFooter() {
           <h3 class="font-semibold mb-2">Quick Links</h3>
           <ul class="space-y-1 text-gray-400">
             <li><a href="index.html" class="hover:text-white">Home</a></li>
-            <li><a href="#" class="hover:text-white">About</a></li>
+            <li><a href="about.html" class="hover:text-white">About</a></li>
             <li><a href="#" class="hover:text-white">Contact</a></li>
           </ul>
         </div>
@@ -64,6 +97,7 @@ function loadFooter() {
 
   document.getElementById("footer").innerHTML = footer;
 }
+
 function goHome() {
   window.location.href = "index.html";
 }

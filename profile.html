@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Profile</title>
+  <link href="output.css" rel="stylesheet">
+</head>
+
+<body class="bg-gray-100">
+
+  <div id="navbar"></div>
+
+  <div class="max-w-3xl mx-auto bg-white p-6 rounded-xl shadow mt-24">
+    <h2 class="text-2xl font-bold mb-4">My Profile</h2>
+
+    <p id="userInfo" class="mb-4"></p>
+
+    <button onclick="logout()" class="bg-red-500 text-white px-4 py-2 rounded">
+      Logout
+    </button>
+  </div>
+
+  <div id="footer"></div>
+
+  <script src="auth.js"></script>
+  <script src="layout.js"></script>
+
+  <script>
+    loadNavbar();
+    loadFooter();
+
+    const user = JSON.parse(localStorage.getItem("user"));
+
+    if (!user) {
+      window.location.href = "login.html";
+    } else {
+      document.getElementById("userInfo").innerHTML =
+        `<b>Name:</b> ${user.name} <br> <b>Email:</b> ${user.email}`;
+    }
+  </script>
+
+</body>
+</html>

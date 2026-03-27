@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Signup - EasyPG</title>
+  <link href="output.css" rel="stylesheet">
+</head>
+
+<body class="bg-gray-100">
+
+  <div id="navbar"></div>
+
+  <div class="flex justify-center items-center h-screen">
+    
+    <div class="bg-white p-6 rounded-xl shadow-md w-80">
+      <h2 class="text-2xl font-bold mb-4 text-center">Signup</h2>
+
+      <input id="name" type="text" placeholder="Name.."
+        class="w-full mb-3 p-2 border rounded" />
+
+      <input id="email" type="email" placeholder="Email"
+        class="w-full mb-3 p-2 border rounded" />
+
+      <input id="password" type="password" placeholder="Password"
+        class="w-full mb-4 p-2 border rounded" />
+
+      <button onclick="signup()"
+        class="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700">
+        Signup
+      </button>
+
+      <p id="error" class="text-red-500 text-sm mt-2"></p>
+
+      <p class="text-sm mt-3 text-center">
+        Already have an account?
+        <a href="login.html" class="text-blue-600">Login</a>
+      </p>
+    </div>
+
+  </div>
+
+  <script src="auth.js"></script>
+  <script src="layout.js"></script>
+
+  <script>
+    loadNavbar();
+  </script>
+
+</body>
+</html>

@@ -1,8 +1,16 @@
 const container = document.getElementById("listings");
 const searchInput = document.getElementById("search");
+const userListings = JSON.parse(localStorage.getItem("userListings")) || [];
+const allListings = [...listings, ...userListings];
 
 function createCard(item) {
   const card = document.createElement("div");
+
+  const user = JSON.parse(localStorage.getItem("user"));
+  const wishlistData = JSON.parse(localStorage.getItem("wishlist")) || {};
+  const userWishlist = user ? (wishlistData[user.email] || []) : [];
+
+  const isSaved = userWishlist.some(i => i.id === item.id);
 
   card.className = `
     bg-white rounded-xl shadow-md overflow-hidden cursor-pointer 
@@ -24,11 +32,44 @@ function createCard(item) {
       </div>
 
       <p class="text-xs text-gray-500 mt-1">${item.gender}</p>
+
+      <button class="saveBtn mt-3 text-red-500">
+        ${isSaved ? "❤️ Saved" : "🤍 Save"}
+      </button>
     </div>
   `;
 
+  // 👉 Open details
   card.addEventListener("click", () => {
     window.location.href = `listing.html?id=${item.id}`;
+  });
+
+  // 👉 Save logic
+  const saveBtn = card.querySelector(".saveBtn");
+
+  saveBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+
+    if (!user) {
+      alert("Please login first");
+      return;
+    }
+
+    let wishlistData = JSON.parse(localStorage.getItem("wishlist")) || {};
+    let userWishlist = wishlistData[user.email] || [];
+
+    const exists = userWishlist.find(i => i.id === item.id);
+
+    if (exists) {
+      userWishlist = userWishlist.filter(i => i.id !== item.id);
+    } else {
+      userWishlist.push(item);
+    }
+
+    wishlistData[user.email] = userWishlist;
+    localStorage.setItem("wishlist", JSON.stringify(wishlistData));
+
+    location.reload(); // simple refresh
   });
 
   return card;
@@ -42,7 +83,7 @@ function displayListings(data) {
 }
 
 // Initial Load
-displayListings(listings);
+displayListings(allListings);
 
 // Search functionality (city + area)
 searchInput.addEventListener("input", () => {

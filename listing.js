@@ -2,19 +2,32 @@
 const params = new URLSearchParams(window.location.search);
 const id = params.get("id");
 
+// Get user
+const user = JSON.parse(localStorage.getItem("user"));
+
+// Combine default + user listings (IMPORTANT)
+const userListings = JSON.parse(localStorage.getItem("userListings")) || [];
+const allListings = [...listings, ...userListings];
+
 // Find the listing
-const listing = listings.find(item => item.id == id);
+const listing = allListings.find(item => item.id == id);
 
 // Get container
 const container = document.getElementById("details");
 
-// If listing not found (important edge case)
+// If listing not found
 if (!listing) {
   container.innerHTML = `
     <h2 class="text-xl text-red-500">Listing not found</h2>
     <a href="index.html" class="text-blue-500 underline">Go back</a>
   `;
 } else {
+
+  // Get wishlist data
+  const wishlistData = JSON.parse(localStorage.getItem("wishlist")) || {};
+  const userWishlist = user ? (wishlistData[user.email] || []) : [];
+
+  const isSaved = userWishlist.some(i => i.id === listing.id);
 
   container.innerHTML = `
     <h1 class="text-2xl font-bold mb-4">${listing.title}</h1>
@@ -41,6 +54,14 @@ if (!listing) {
 
     <p class="mb-4">${listing.description}</p>
 
+    <!-- ❤️ Save Button -->
+    <button id="saveBtn" 
+      class="mb-4 px-4 py-2 rounded-lg text-white 
+      ${isSaved ? "bg-green-600" : "bg-red-500"}">
+      ${isSaved ? "❤️ Saved" : "🤍 Save"}
+    </button>
+
+    <!-- Contact -->
     <button id="contactBtn" 
       class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700">
       Contact Owner
@@ -51,13 +72,43 @@ if (!listing) {
     </p>
   `;
 
-  // Contact button functionality (your idea 🔥)
-  const btn = document.getElementById("contactBtn");
+  // 🔥 CONTACT BUTTON
+  const contactBtn = document.getElementById("contactBtn");
   const contactInfo = document.getElementById("contactInfo");
 
-  btn.addEventListener("click", () => {
+  contactBtn.addEventListener("click", () => {
     contactInfo.classList.remove("hidden");
-    btn.innerText = "Number Shown";
-    btn.disabled = true;
+    contactBtn.innerText = "Number Shown";
+    contactBtn.disabled = true;
+  });
+
+  // 🔥 SAVE BUTTON
+  const saveBtn = document.getElementById("saveBtn");
+
+  saveBtn.addEventListener("click", () => {
+
+    if (!user) {
+      alert("Please login first");
+      return;
+    }
+
+    let wishlistData = JSON.parse(localStorage.getItem("wishlist")) || {};
+    let userWishlist = wishlistData[user.email] || [];
+
+    const exists = userWishlist.find(i => i.id === listing.id);
+
+    if (exists) {
+      // REMOVE
+      userWishlist = userWishlist.filter(i => i.id !== listing.id);
+    } else {
+      // ADD
+      userWishlist.push(listing);
+    }
+
+    wishlistData[user.email] = userWishlist;
+    localStorage.setItem("wishlist", JSON.stringify(wishlistData));
+
+    // 🔥 Update UI instantly
+    location.reload();
   });
 }
