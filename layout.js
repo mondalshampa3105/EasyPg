@@ -35,7 +35,7 @@ function loadNavbar() {
       <div class="flex gap-6 items-center">
         <a href="index.html" class="text-gray-600 hover:text-blue-600">Home</a>
         <a href="about.html" class="text-gray-600 hover:text-blue-600">About</a>
-        <a href="#" class="text-gray-600 hover:text-blue-600">Contact</a>
+        <a href="contact.html" class="text-gray-600 hover:text-blue-600">Contact</a>
         ${rightSection}
       </div>
 
@@ -73,7 +73,7 @@ function loadFooter() {
           <ul class="space-y-1 text-gray-400">
             <li><a href="index.html" class="hover:text-white">Home</a></li>
             <li><a href="about.html" class="hover:text-white">About</a></li>
-            <li><a href="#" class="hover:text-white">Contact</a></li>
+            <li><a href="contact.html" class="hover:text-white">Contact</a></li>
           </ul>
         </div>
 
