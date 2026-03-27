@@ -9,28 +9,88 @@
 
   <div id="navbar"></div>
 
-  <div class="max-w-2xl mx-auto bg-white p-6 rounded-xl shadow mt-24">
-    <h2 class="text-2xl font-bold mb-4">Add Listing</h2>
+  <div class="max-w-3xl mx-auto bg-white p-8 rounded-2xl shadow-md mt-24">
 
-    <input id="title" placeholder="Title" class="w-full mb-3 p-2 border rounded"/>
-    <input id="location" placeholder="City" class="w-full mb-3 p-2 border rounded"/>
-    <input id="area" placeholder="Area" class="w-full mb-3 p-2 border rounded"/>
-    <input id="price" type="number" placeholder="Price" class="w-full mb-3 p-2 border rounded"/>
-    <input id="image" placeholder="Image URL" class="w-full mb-3 p-2 border rounded"/>
+    <h2 class="text-3xl font-bold mb-6 text-gray-800">
+      Add New Listing
+    </h2>
 
-    <select id="type" class="w-full mb-3 p-2 border rounded">
-      <option>PG</option>
-      <option>Flat</option>
-    </select>
+    <!-- Basic Info -->
+    <div class="mb-6">
+      <h3 class="text-lg font-semibold mb-3 text-gray-700">Basic Details</h3>
 
-    <select id="gender" class="w-full mb-3 p-2 border rounded">
-      <option>Boys</option>
-      <option>Girls</option>
-    </select>
+      <input id="title" placeholder="Title (e.g. PG near metro)"
+        class="w-full mb-3 px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-400 outline-none"/>
 
-    <button onclick="addListing()" class="w-full bg-green-600 text-white py-2 rounded">
-      Add Listing
+      <div class="grid grid-cols-2 gap-3">
+        <input id="location" placeholder="City"
+          class="px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-400 outline-none"/>
+
+        <input id="area" placeholder="Area"
+          class="px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-400 outline-none"/>
+      </div>
+    </div>
+
+    <!-- Pricing -->
+    <div class="mb-6">
+      <h3 class="text-lg font-semibold mb-3 text-gray-700">Pricing</h3>
+
+      <input id="price" type="number" placeholder="Monthly Rent (₹)"
+        class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-400 outline-none"/>
+    </div>
+
+    <!-- Property Details -->
+    <div class="mb-6">
+      <h3 class="text-lg font-semibold mb-3 text-gray-700">Property Info</h3>
+
+      <div class="grid grid-cols-2 gap-3">
+        <select id="type"
+          class="px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-400 outline-none">
+          <option>PG</option>
+          <option>Flat</option>
+        </select>
+
+        <select id="gender"
+          class="px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-400 outline-none">
+          <option>Boys</option>
+          <option>Girls</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Description -->
+    <div class="mb-6">
+      <h3 class="text-lg font-semibold mb-3 text-gray-700">Description</h3>
+
+      <textarea id="description" rows="4"
+        placeholder="Write details about your property..."
+        class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-400 outline-none"></textarea>
+    </div>
+
+    <!-- Amenities -->
+    <div class="mb-6">
+      <h3 class="text-lg font-semibold mb-3 text-gray-700">Amenities</h3>
+
+      <input id="amenities"
+        placeholder="e.g. WiFi, Food, AC, Parking"
+        class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-400 outline-none"/>
+    </div>
+
+    <!-- Image -->
+    <div class="mb-6">
+      <h3 class="text-lg font-semibold mb-3 text-gray-700">Image</h3>
+
+      <input id="image" placeholder="Image URL"
+        class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-400 outline-none"/>
+    </div>
+
+    <!-- Submit -->
+    <button onclick="addListing()"
+      class="w-full bg-green-600 text-white py-3 rounded-xl font-semibold 
+             hover:bg-green-700 transition duration-200">
+      + Add Listing
     </button>
+
   </div>
 
   <div id="footer"></div>

@@ -5,7 +5,7 @@ const id = params.get("id");
 // Get user
 const user = JSON.parse(localStorage.getItem("user"));
 
-// Combine default + user listings (IMPORTANT)
+// Combine default + user listings
 const userListings = JSON.parse(localStorage.getItem("userListings")) || [];
 const allListings = [...listings, ...userListings];
 
@@ -15,7 +15,6 @@ const listing = allListings.find(item => item.id == id);
 // Get container
 const container = document.getElementById("details");
 
-// If listing not found
 if (!listing) {
   container.innerHTML = `
     <h2 class="text-xl text-red-500">Listing not found</h2>
@@ -23,27 +22,36 @@ if (!listing) {
   `;
 } else {
 
-  // Get wishlist data
+  // 🔥 FIX: define isOwner
+  const isOwner = user && listing.ownerEmail === user.email;
+
   const wishlistData = JSON.parse(localStorage.getItem("wishlist")) || {};
   const userWishlist = user ? (wishlistData[user.email] || []) : [];
 
   const isSaved = userWishlist.some(i => i.id === listing.id);
 
   container.innerHTML = `
-    <h1 class="text-2xl font-bold mb-4">${listing.title}</h1>
+  <div class="space-y-4">
 
-    <img src="${listing.image}" class="w-full h-80 object-cover rounded-lg mb-4"/>
+    <h1 class="text-3xl font-bold">${listing.title}</h1>
 
-    <p class="text-gray-600 mb-2"><b>Location:</b> ${listing.area}, ${listing.location}</p>
-    <p class="text-green-600 font-bold mb-2">₹${listing.price}/month</p>
-    <p class="mb-2">⭐ ${listing.rating}</p>
+    <img src="${listing.image}" 
+      class="w-full h-80 object-cover rounded-xl"/>
 
-    <p class="mb-2"><b>Type:</b> ${listing.type}</p>
-    <p class="mb-2"><b>Gender:</b> ${listing.gender}</p>
+    <div class="flex justify-between items-center">
+      <p class="text-gray-600">${listing.area}, ${listing.location}</p>
+      <p class="text-green-600 font-bold text-lg">₹${listing.price}/month</p>
+    </div>
 
-    <div class="mb-3">
-      <b>Amenities:</b>
-      <div class="flex flex-wrap gap-2 mt-2">
+    <div class="flex gap-3 text-sm">
+      <span class="bg-blue-100 px-3 py-1 rounded">${listing.type}</span>
+      <span class="bg-gray-200 px-3 py-1 rounded">${listing.gender}</span>
+      <span>⭐ ${listing.rating}</span>
+    </div>
+
+    <div>
+      <h3 class="font-semibold mb-2">Amenities</h3>
+      <div class="flex flex-wrap gap-2">
         ${listing.amenities.map(a => `
           <span class="bg-blue-100 px-2 py-1 rounded text-sm">
             ${a}
@@ -52,27 +60,41 @@ if (!listing) {
       </div>
     </div>
 
-    <p class="mb-4">${listing.description}</p>
+    <div>
+      <h3 class="font-semibold mb-2">Description</h3>
+      <p class="text-gray-700">${listing.description}</p>
+    </div>
 
-    <!-- ❤️ Save Button -->
-    <button id="saveBtn" 
-      class="mb-4 px-4 py-2 rounded-lg text-white 
-      ${isSaved ? "bg-green-600" : "bg-red-500"}">
-      ${isSaved ? "❤️ Saved" : "🤍 Save"}
-    </button>
+    <div class="flex gap-3 mt-4 flex-wrap">
 
-    <!-- Contact -->
-    <button id="contactBtn" 
-      class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700">
-      Contact Owner
-    </button>
+      <button id="saveBtn" 
+        class="px-4 py-2 rounded-lg text-white 
+        ${isSaved ? "bg-green-600" : "bg-red-500"}">
+        ${isSaved ? "❤️ Saved" : "🤍 Save"}
+      </button>
 
-    <p id="contactInfo" class="mt-3 text-green-600 hidden">
+      <button id="contactBtn" 
+        class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700">
+        Contact Owner
+      </button>
+
+      ${isOwner ? `
+        <button id="deleteBtn"
+          class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700">
+          Delete Listing
+        </button>
+      ` : ""}
+
+    </div>
+
+    <p id="contactInfo" class="mt-2 text-green-600 hidden">
       📞 Phone: 9876543210
     </p>
+
+  </div>
   `;
 
-  // 🔥 CONTACT BUTTON
+  // CONTACT
   const contactBtn = document.getElementById("contactBtn");
   const contactInfo = document.getElementById("contactInfo");
 
@@ -82,7 +104,7 @@ if (!listing) {
     contactBtn.disabled = true;
   });
 
-  // 🔥 SAVE BUTTON
+  // SAVE
   const saveBtn = document.getElementById("saveBtn");
 
   saveBtn.addEventListener("click", () => {
@@ -98,17 +120,33 @@ if (!listing) {
     const exists = userWishlist.find(i => i.id === listing.id);
 
     if (exists) {
-      // REMOVE
       userWishlist = userWishlist.filter(i => i.id !== listing.id);
     } else {
-      // ADD
       userWishlist.push(listing);
     }
 
     wishlistData[user.email] = userWishlist;
     localStorage.setItem("wishlist", JSON.stringify(wishlistData));
 
-    // 🔥 Update UI instantly
     location.reload();
   });
+
+  // 🔥 DELETE (inside block)
+  const deleteBtn = document.getElementById("deleteBtn");
+
+  if (deleteBtn) {
+    deleteBtn.addEventListener("click", () => {
+
+      if (!confirm("Are you sure you want to delete this listing?")) return;
+
+      let userListings = JSON.parse(localStorage.getItem("userListings")) || [];
+
+      userListings = userListings.filter(i => i.id != listing.id);
+
+      localStorage.setItem("userListings", JSON.stringify(userListings));
+
+      alert("Listing deleted");
+      window.location.href = "index.html";
+    });
+  }
 }
