@@ -10,33 +10,79 @@
   <div id="navbar"></div>
 
   <div class="max-w-3xl mx-auto bg-white p-6 rounded-xl shadow mt-24">
-    <h2 class="text-2xl font-bold mb-4">My Profile</h2>
 
-    <p id="userInfo" class="mb-4"></p>
+  <h2 class="text-2xl font-bold mb-6">My Profile</h2>
 
-    <button onclick="logout()" class="bg-red-500 text-white px-4 py-2 rounded">
+  <!-- User Info -->
+  <div id="userInfo" class="mb-6 text-gray-700"></div>
+
+  <!-- Actions -->
+  <div class="flex gap-4">
+
+    <!-- Wishlist Button -->
+    <a href="wishlist.html"
+      class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">
+      ❤️ My Wishlist
+    </a>
+
+    <!-- Logout Button -->
+    <button onclick="logout()"
+      class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition">
       Logout
     </button>
+
   </div>
+  <!-- My Listings -->
+<div class="mt-10">
+  <h3 class="text-xl font-semibold mb-4">My Listings</h3>
+
+  <div id="myListings"
+    class="grid grid-cols-1 md:grid-cols-2 gap-4">
+  </div>
+</div>
+
+</div>
 
   <div id="footer"></div>
 
   <script src="auth.js"></script>
   <script src="layout.js"></script>
+  <script src="data.js"></script>
+  <script src="script.js"></script>
 
   <script>
-    loadNavbar();
-    loadFooter();
+  loadNavbar();
+  loadFooter();
 
-    const user = JSON.parse(localStorage.getItem("user"));
+  const user = JSON.parse(localStorage.getItem("user"));
 
-    if (!user) {
-      window.location.href = "login.html";
+  if (!user) {
+    window.location.href = "login.html";
+  } else {
+    document.getElementById("userInfo").innerHTML =
+      `<b>Name:</b> ${user.name} <br> <b>Email:</b> ${user.email}`;
+
+    // 🔥 Get all user-created listings
+    const allUserListings = JSON.parse(localStorage.getItem("userListings")) || [];
+
+    // 🔥 Filter only this user's listings
+    const myListings = allUserListings.filter(
+      item => item.ownerEmail === user.email
+    );
+
+    const container = document.getElementById("myListings");
+
+    if (myListings.length === 0) {
+      container.innerHTML = `
+        <p class="text-gray-500">You have not added any listings yet.</p>
+      `;
     } else {
-      document.getElementById("userInfo").innerHTML =
-        `<b>Name:</b> ${user.name} <br> <b>Email:</b> ${user.email}`;
+      myListings.forEach(item => {
+        container.appendChild(createCard(item));
+      });
     }
-  </script>
+  }
+</script>
 
 </body>
 </html>

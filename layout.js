@@ -7,7 +7,6 @@ function loadNavbar() {
   if (user) {
     rightSection = `
       <a href="add-listing.html" class="text-gray-600 hover:text-blue-600">Add Listing</a>
-      <a href="wishlist.html" class="text-gray-600 hover:text-blue-600">Wishlist</a>
       <a href="profile.html" class="text-gray-600 hover:text-blue-600">Profile</a>
 
       <span class="text-gray-700">Hi, <b>${user.name}</b></span>
